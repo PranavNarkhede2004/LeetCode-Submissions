@@ -1,0 +1,60 @@
+class Spreadsheet {
+public:
+    int rows;
+    unordered_map<string,int> mp;
+    Spreadsheet(int row) {
+        rows=row;
+    }
+    
+    void setCell(string cell, int value) {
+        mp[cell]=value;
+    }
+    
+    void resetCell(string cell) {
+        mp[cell]=0;
+    }
+    
+    int getValue(string formula) {
+        string num1="";
+        int n=formula.length();
+       int i=1;
+       while(formula[i]!='+'){
+        num1+=formula[i];
+        i++;
+       }
+       i++;
+       string num2="";
+       while(i<n){
+            num2+=formula[i];
+            i++;
+       }
+       int val1=-1,val2=-1;
+       int n1=num1.length(),n2=num2.length();
+       for(int i=0;i<n1;i++){
+        if((num1[i]>='A' && num1[i]<='Z') || (num1[i]>='a' && num1[i]<='z')){
+            val1=mp[num1];
+        }
+       }
+       if(val1==-1){
+        val1=stoi(num1);
+       }
+    
+       for(int i=0;i<n2;i++){
+        if((num2[i]>='A' && num2[i]<='Z') || (num2[i]>='a' && num2[i]<='z')){
+            val2=mp[num2];
+        }
+       }
+       if(val2==-1){
+        val2=stoi(num2);
+       }
+       return val1+val2;
+    }
+};
+
+/**
+ * Your Spreadsheet object will be instantiated and called as such:
+ * Spreadsheet* obj = new Spreadsheet(rows);
+ * obj->setCell(cell,value);
+ * obj->resetCell(cell);
+ * int param_3 = obj->getValue(formula);
+ */

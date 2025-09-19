@@ -1,0 +1,4 @@
+1)If there is asked to find the maximum or minimum length of the substring then apply sliding window+
+Hashmap concept;
+2)If we have to iterate through the specific range fir the ans then we should use binary search concept.
+3)
