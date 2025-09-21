@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int numberOfSubstrings(string s) {
+        vector<int> vc;    
+        int n=s.length();
+        int l=0,r=0;
+        vc={-1,-1,-1};
+        int cnt=0;
+        while(r<n){
+            vc[s[r]-'a']=r;
+           if( vc[0]!=-1 && vc[1]!=-1 && vc[2]!=-1){
+            int mini=min(vc[0],vc[1]);
+            cnt+=1+min(mini,vc[2]);
+           }
+           r++;
+
+        }
+        return cnt;
+    }
+};

@@ -1,0 +1,26 @@
+class Solution {
+public:
+int subarraysWithAtMostKDistinct(vector<int>& s, int k) {
+    int n = s.size();
+    unordered_map<int,int> mp;
+    int l = 0, cnt = 0;
+    
+    for(int r = 0; r < n; r++) {
+        mp[s[r]]++;
+        
+        while(mp.size() > k) {
+            mp[s[l]]--;
+            if(mp[s[l]] == 0) mp.erase(s[l]);
+            l++;
+        }
+        
+        cnt += (r - l + 1);
+    }
+    return cnt;
+}
+
+    int subarraysWithKDistinct(vector<int>& s, int k) {
+       
+        return subarraysWithAtMostKDistinct(s,k)-subarraysWithAtMostKDistinct(s,k-1);
+    }
+};

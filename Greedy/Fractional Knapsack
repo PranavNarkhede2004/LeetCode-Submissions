@@ -1,0 +1,31 @@
+class Solution {
+public:
+    static bool cmp(const pair<double,pair<int,int>> &a,const pair<double,pair<int,int>> &b){
+        return a.first > b.first;
+    }
+
+    double fractionalKnapsack(vector<int>& val, vector<int>& wt, int capacity) {
+        vector<pair<double, pair<int,int>>> vc;
+
+        for(int i=0;i<val.size();i++){
+            vc.push_back({(double)val[i]/wt[i], {val[i], wt[i]}});
+        }
+
+        sort(vc.begin(), vc.end(), cmp);
+
+        int currWt = 0;
+        double ans = 0;
+
+        for(int i=0;i<vc.size();i++){
+            if(currWt + vc[i].second.second <= capacity){
+                currWt += vc[i].second.second;
+                ans += vc[i].second.first;
+            } else {
+                ans += ((double)vc[i].second.first / vc[i].second.second) * (capacity - currWt);
+                break;
+            }
+        }
+
+        return ans;
+    }
+};
