@@ -1,0 +1,41 @@
+class Solution {
+public:
+    vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {
+        vector<vector<int>> ans;
+        int n = intervals.size();
+        int l = newInterval[0], r = newInterval[1];
+        bool isAdded = false;
+
+        for(int i = 0; i < n; i++){
+            if(!isAdded){
+                if(r < intervals[i][0]) { // newInterval before current interval
+                    ans.push_back({l, r});
+                    ans.push_back(intervals[i]);
+                    isAdded = true;
+                } 
+                else if(l <= intervals[i][1]) { // overlapping
+                    int l1 = min(l, intervals[i][0]);
+                    int r1 = max(r, intervals[i][1]);
+                    i++;
+                    while(i < n && r1 >= intervals[i][0]){
+                        l1 = min(l1, intervals[i][0]);
+                        r1 = max(r1, intervals[i][1]);
+                        i++;
+                    }
+                    ans.push_back({l1, r1});
+                    isAdded = true;
+                    i--; // adjust index
+                } 
+                else { // current interval is completely before newInterval
+                    ans.push_back(intervals[i]);
+                }
+            } else {
+                ans.push_back(intervals[i]);
+            }
+        }
+
+        if(!isAdded) ans.push_back({l, r}); // newInterval goes at the end
+
+        return ans;
+    }
+};

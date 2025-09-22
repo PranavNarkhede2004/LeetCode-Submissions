@@ -1,0 +1,21 @@
+// User function template for C++
+
+class Solution {
+  public:
+    // arr : given array
+    // k : find kth smallest element and return using this function
+    int kthSmallest(vector<int> &arr, int k) {
+        // code here
+        //kth Smallest element so we will use max heap
+        priority_queue<int> maxh;
+        int n=arr.size();
+        for(int i=0;i<n;i++){
+            if(maxh.size()==k){
+                maxh.push(arr[i]);
+                maxh.pop();
+                
+            }else maxh.push(arr[i]);
+        }
+        return maxh.top();
+    }
+};

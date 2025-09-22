@@ -1,0 +1,18 @@
+// User function Template for C++
+
+//Back-end complete function Template for C++
+
+class Solution {
+  public:
+    long long solve(vector<int>& bt) {
+        // code here
+        int n=bt.size();
+        long long sum=0,prevsum=0;
+        sort(bt.begin(),bt.end());
+        for(int i=1;i<n;i++){
+            prevsum+=bt[i-1];
+            sum+=prevsum;
+        }
+        return (long long) sum/n;
+    }
+};

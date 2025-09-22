@@ -1,0 +1,36 @@
+class Solution {
+  public:
+   static bool cmp(const pair<int,int> &a,const pair<int,int> &b){
+
+          return a.second>b.second;
+
+  }
+    vector<int> jobSequencing(vector<int> &deadline, vector<int> &profit) {
+        // code here
+        vector<pair<int,int>> vc;
+        for(int i=0;i<deadline.size();i++){
+            vc.push_back({deadline[i],profit[i]});
+        }
+        sort(vc.begin(),vc.end(),cmp);
+        int maxi=-1;
+        for(int i=0;i<deadline.size();i++){
+            maxi=max(maxi,deadline[i]);
+        }
+        vector<bool> used(maxi+1,false);
+        int num=0,pro=0;
+        for(int i=0;i<vc.size();i++){
+            // We have to optimize this inner loop by DSU because it is giving tle in some cases after 1110 in GFG
+            // We can use DSU to find the parent of the available slot in logn time
+            for(int j=vc[i].first;j>=1;j--){
+                if(used[j]==false){
+                    used[j]=true;
+                    pro+=vc[i].second;
+                    num++;
+                    break;
+                }
+            }
+        }
+        
+        return {num,pro};
+    }
+};

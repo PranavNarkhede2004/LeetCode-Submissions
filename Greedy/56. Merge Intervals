@@ -1,0 +1,21 @@
+class Solution {
+public:
+    vector<vector<int>> merge(vector<vector<int>>& A) {
+        int n=A.size();
+        vector<vector<int>> ans;
+        sort(A.begin(),A.end());
+            int start=A[0][0];
+            int end=A[0][1];
+        for(int i=1;i<n;i++){
+           if(end>=A[i][0]){
+            end=max(end,A[i][1]);
+           }else{
+            ans.push_back({start,end});
+            start=A[i][0];
+            end=A[i][1];
+           }
+        }
+        ans.push_back({start,end});
+        return ans;
+    }
+};
