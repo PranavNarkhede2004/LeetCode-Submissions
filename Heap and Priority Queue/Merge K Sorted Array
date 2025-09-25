@@ -1,0 +1,38 @@
+class Solution {
+  public:
+    struct cmp {
+        bool operator()(const pair<int,pair<int,int>>& a,
+                        const pair<int,pair<int,int>>& b) {
+            return a.first > b.first;  
+            // > for min-heap (smallest element on top)
+            // < for max-heap (largest element on top)
+        }
+    };
+    // Function to merge k sorted arrays.
+    vector<int> mergeKArrays(vector<vector<int>> arr, int k) {
+        // code here
+        vector<int> ans;
+        priority_queue<pair<int,pair<int,int>>,vector<pair<int,pair<int,int>>>,cmp> pq;
+        
+        for(int i=0;i<k;i++){
+            pq.push({arr[i][0],{i,0}});
+        }
+        
+        while(!pq.empty()){
+            
+           
+                //remove top element and add it to ans
+                int val=pq.top().first;
+                int rowInd=pq.top().second.first;
+                int colInd=pq.top().second.second;
+                ans.push_back(val);
+                pq.pop();
+                
+                if(colInd+1<arr[rowInd].size()){
+                    pq.push({arr[rowInd][colInd+1],{rowInd,colInd+1}});
+                }
+        }
+        
+    return ans;
+    }
+};

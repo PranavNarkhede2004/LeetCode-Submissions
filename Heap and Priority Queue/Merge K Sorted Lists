@@ -1,0 +1,51 @@
+/*
+class Node {
+  public:
+    int data;
+    Node* next;
+
+    Node(int x){
+        data = x;
+        next = NULL;
+    }
+};
+*/
+
+class Solution {
+  public:
+  struct cmp{
+      bool operator()(const pair<int,Node*> &a,
+                    const pair<int,Node*> &b) const {
+                        return a.first>b.first;
+                    }
+  };
+    Node* mergeKLists(vector<Node*>& arr) {
+        // code here
+      priority_queue<pair<int,Node*>,vector<pair<int,Node*>>,cmp> pq;
+      Node* dummy = new Node(0);
+      Node* tail = dummy;
+      int nRows=arr.size();
+      for(int i=0;i<nRows;i++){
+          if(arr[i]!=NULL){
+              Node *temp=arr[i];
+              pq.push({temp->data,temp});
+          }
+      }
+      while(!pq.empty()){
+          // Remove top element
+          int val=pq.top().first;
+          Node * head=pq.top().second;
+          pq.pop();
+          tail->next = head;
+          tail = tail->next;
+          
+          //Insert the new element from same Linked list
+          if(head->next!=NULL){
+              pq.push({head->next->data,head->next});
+              
+          }
+      }
+        return dummy->next;
+        
+    }
+};
