@@ -1,0 +1,42 @@
+class Solution {
+  public:
+    struct cmp {
+        bool operator()(const pair<int,int> &a,
+                        const pair<int,int> &b) const {
+            return a.first > b.first; // min-heap by value
+        }
+    };
+
+    vector<int> replaceWithRank(vector<int> &arr, int N) {
+        vector<int> ans(N, 0);
+        priority_queue<pair<int,int>, vector<pair<int,int>>, cmp> pq;
+
+        for (int i = 0; i < N; i++) {
+            pq.push({arr[i], i});
+        }
+
+        int rank = 1;
+        int prevVal = INT_MIN;
+        int lastAssignedRank = -1;
+
+        while (!pq.empty()) {
+            int val = pq.top().first;
+            int ind = pq.top().second;
+            pq.pop();
+
+            if (val != prevVal) {
+                ans[ind] = rank;
+                prevVal = val;
+                lastAssignedRank = rank;
+            } else {
+                ans[ind] = lastAssignedRank; 
+            }
+
+            if (!pq.empty() && pq.top().first != val) {
+                rank++;
+            }
+        }
+
+        return ans;
+    }
+};

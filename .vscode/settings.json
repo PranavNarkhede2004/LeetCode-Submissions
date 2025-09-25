@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "*.ejs": "html",
+        "146_lrucache": "cpp"
+    }
+}
