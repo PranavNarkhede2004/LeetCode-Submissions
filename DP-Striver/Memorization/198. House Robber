@@ -1,0 +1,17 @@
+class Solution {
+public:
+    vector<int> dp;
+    int fun(int n,vector<int> & nums){
+       if(n==0) return nums[0];
+       if(n==1) return max(nums[0],nums[1]);
+       
+        if(dp[n]!=-1){
+            return dp[n];
+        }else 
+        return dp[n]=max(nums[n]+fun(n-2,nums),fun(n-1,nums));
+    }
+    int rob(vector<int>& nums) {
+        dp.assign(nums.size()+1,-1);
+        return fun(nums.size()-1,nums);
+    }
+};

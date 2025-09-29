@@ -1,0 +1,16 @@
+class Solution {
+public:
+    vector<vector<int>> dp;
+    int fun(int n,int m){
+        if(n==0 && m==0) return 1;
+        if(n<0 || m<0) return 0;
+        if(dp[n][m]==-1){
+            return dp[n][m]=fun(n-1,m)+fun(n,m-1);
+        }else return dp[n][m];
+        
+    }
+    int uniquePaths(int m, int n) {
+        dp.assign(n,vector<int> (m,-1));
+        return fun(n-1,m-1);
+    }
+};
