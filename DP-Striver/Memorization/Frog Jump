@@ -1,0 +1,20 @@
+class Solution {
+  public:
+    vector<int> dp;
+    int fun(int n,vector<int>& ht){
+        if(n==0) return 0;
+        if(n==1) return abs(ht[0]-ht[1]);
+        if(dp[n]==-1){
+            return dp[n]=min(abs(ht[n-1]-ht[n])+fun(n-1,ht),abs(ht[n]-ht[n-2])+fun(n-2,ht));
+        }else return dp[n];
+         
+    }
+    int minCost(vector<int>& height) {
+        // Code here
+        dp.assign(height.size()+1,-1);
+        return fun(height.size()-1,height);
+        
+        
+        
+    }
+};
