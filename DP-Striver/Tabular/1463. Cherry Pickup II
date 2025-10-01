@@ -1,0 +1,48 @@
+class Solution {
+public:
+    int cherryPickup(vector<vector<int>>& grid) {
+        int n = grid.size();
+        int m = grid[0].size();
+
+       
+        vector<vector<vector<int>>> dp(n, vector<vector<int>>(m, vector<int>(m, -100000000)));
+
+        // Base case: last row
+        for (int j = 0; j < m; j++) {
+            for (int k = 0; k < m; k++) {
+                if (j == k) {
+                    dp[n-1][j][k] = grid[n-1][j];
+                } else {
+                    dp[n-1][j][k] = grid[n-1][j] + grid[n-1][k];
+                }
+            }
+        }
+
+        // Bottom-up transition
+        for (int i = n-2; i >= 0; i--) {
+            for (int j = 0; j < m; j++) {
+                for (int k = 0; k < m; k++) {
+                    int maxi = -100000000;
+                    for (int dj1 = -1; dj1 <= 1; dj1++) {
+                        for (int dj2 = -1; dj2 <= 1; dj2++) {
+                            int nj = j + dj1;
+                            int nk = k + dj2;
+                            if (nj >= 0 && nk >= 0 && nj < m && nk < m) {
+                                int cherries = 0;
+                                if (j == k) {
+                                    cherries = grid[i][j];
+                                } else {
+                                    cherries = grid[i][j] + grid[i][k];
+                                }
+                                maxi = max(maxi, cherries + dp[i+1][nj][nk]);
+                            }
+                        }
+                    }
+                    dp[i][j][k] = maxi;
+                }
+            }
+        }
+
+        return dp[0][0][m-1];
+    }
+};

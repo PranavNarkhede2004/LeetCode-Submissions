@@ -1,0 +1,15 @@
+class Solution {
+public:
+    int numWaterBottles(int B, int Ex) {
+        int ans=0;
+        int empty=0;
+        while(B!=0){
+           ans+=B;
+           empty+=B;
+           B=empty/Ex;
+            empty=empty%Ex;
+            
+        }
+        return ans;
+    }
+};

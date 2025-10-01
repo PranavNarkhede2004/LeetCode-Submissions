@@ -1,0 +1,25 @@
+class Solution {
+public:
+    vector<vector<int>> dp;
+    int minFallingPathSum(vector<vector<int>>& mat) {
+        int n=mat.size();
+        dp.assign(n,vector<int>(n));
+        for(int i=0;i<n;i++){
+            dp[n-1][i]=mat[n-1][i];
+        }
+        for(int i=n-2;i>=0;i--){
+            for(int j=0;j<n;j++){
+                int first=INT_MAX,second=INT_MAX,third=INT_MAX;
+                if(j>0) first=mat[i][j]+dp[i+1][j-1];
+                second=mat[i][j]+dp[i+1][j];
+                if(j<n-1) third=mat[i][j]+dp[i+1][j+1];
+                dp[i][j]=min(first,min(second,third));
+            }
+        }
+        int minSum=INT_MAX;
+        for(int i=0;i<n;i++){
+            minSum=min(minSum,dp[0][i]);
+        }
+        return minSum;
+    }
+};

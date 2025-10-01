@@ -1,0 +1,70 @@
+// Recursive code
+class Solution {
+public:
+    int cols,rows;
+    int fun(int i,int j,int k,vector<vector<int>> &a){
+        if(j<0 || k<0 || j>=cols || k>=cols) return -1e8;
+        if(i==rows-1){
+            if(j==k) return a[i][j];
+            else return a[i][j]+a[i][k];
+        }
+        // Try all possible paths 
+        int maxi=-1e8;
+        for(int dj1=-1;dj1<=1;dj1++){
+            for(int dj2=-1;dj2<=1;dj2++){
+                if(j==k){
+                    maxi=max(maxi,a[i][j]+fun(i+1,j+dj1,k+dj2,a));
+                }else{
+                    maxi=max(maxi,a[i][j]+a[i][k]+fun(i+1,j+dj1,k+dj2,a));
+                }
+            }
+        }
+    return  maxi;
+}
+    int cherryPickup(vector<vector<int>>& grid) {
+        int n=grid.size();
+        int m=grid[0].size();
+        cols=m;
+        rows=n;
+        return fun(0,0,m-1,grid);
+    }
+};
+
+//Memoization
+
+class Solution {
+  public:
+    int cols,rows;
+    vector<vector<vector<int>>> dp;
+    int fun(int i,int j,int k,vector<vector<int>> &a){
+        if(j<0 || k<0 || j>=cols || k>=cols) return -1e8;
+        if(i==rows-1){
+            if(j==k) return a[i][j];
+            else return a[i][j]+a[i][k];
+        }
+        // Try all possible paths 
+        int maxi=-1e8;
+        if(dp[i][j][k]!=-1){
+            return dp[i][j][k];
+        }else{
+        for(int dj1=-1;dj1<=1;dj1++){
+            for(int dj2=-1;dj2<=1;dj2++){
+                if(j==k){
+                    maxi=max(maxi,a[i][j]+fun(i+1,j+dj1,k+dj2,a));
+                }else{
+                    maxi=max(maxi,a[i][j]+a[i][k]+fun(i+1,j+dj1,k+dj2,a));
+                }
+            }
+        }
+        return  dp[i][j][k]=maxi;
+        }
+
+}
+    int solve(int n, int m, vector<vector<int>>& grid) {
+        // code here
+        dp.assign(n, vector<vector<int>>(m, vector<int>(m, -1)));
+        cols=m;
+        rows=n;
+        return fun(0,0,m-1,grid);
+    }
+};

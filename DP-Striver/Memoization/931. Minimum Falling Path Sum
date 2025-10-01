@@ -1,0 +1,37 @@
+class Solution {
+public:
+    int m;
+    vector<vector<int>> dp;
+    int fun(int row,int col,vector<vector<int>>& mat){
+        if(row==0) return mat[0][col];
+        if(row<0 || col <0) return 10000000;
+        int first=INT_MAX,second=INT_MAX,third=INT_MAX;
+        if(dp[row][col]!=-1){
+            return dp[row][col];
+        }else{
+            if(col>0){
+                first=mat[row][col]+fun(row-1,col-1,mat);
+            }
+            second=mat[row][col]+fun(row-1,col,mat);
+            if(col<m-1){
+                third=mat[row][col]+fun(row-1,col+1,mat);
+            }
+            return dp[row][col]=min(first,min(second,third));
+        }
+
+        
+       
+        
+    }
+    int minFallingPathSum(vector<vector<int>>& mat) {
+        int n=mat.size();
+        m=n;
+        dp.assign(n,vector<int>(n,-1));
+        int sum=0,minSum=INT_MAX;
+        for(int i=0;i<n;i++){
+            sum=fun(n-1,i,mat);
+            minSum=min(sum,minSum);
+        }
+        return minSum;
+    }
+};
