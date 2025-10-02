@@ -4,11 +4,10 @@ class Solution {
         int n = arr.size();
         vector<vector<bool>> dp(n+1, vector<bool>(sum+1, false));
 
-        // base cases
-        for (int i = 0; i <= n; i++) dp[i][0] = true;   // sum=0 is always possible
-        for (int j = 1; j <= sum; j++) dp[0][j] = false; // no items, nonzero sum → false
+        
+        for (int i = 0; i <= n; i++) dp[i][0] = true;   
+        for (int j = 1; j <= sum; j++) dp[0][j] = false; 
 
-        // DP transition
         for (int i = 1; i <= n; i++) {
             for (int j = 1; j <= sum; j++) {
                 if (arr[i-1] <= j) {

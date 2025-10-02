@@ -1,0 +1,15 @@
+class Solution {
+public:
+    int maxBottlesDrunk(int B, int Ex) {
+        int ans=0,empty=0;
+        ans+=B;
+        empty+=B;
+        while(empty>=Ex){
+            empty=empty-Ex;
+            empty++;
+            Ex++;
+            ans++;
+        }
+        return ans;
+    }
+};
