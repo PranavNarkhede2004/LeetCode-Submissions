@@ -1,0 +1,27 @@
+// User function Template for C++
+
+class Solution {
+  public:
+    vector<vector<int>> dp;
+    int fun(int ind,vector<int>& val, vector<int>& wt, int capacity){
+        if(ind==0){
+           return (capacity / wt[0]) * val[0];
+        }
+      
+        if(dp[ind][capacity]!=-1){
+            return dp[ind][capacity];
+        }
+        int not_take=fun(ind-1,val,wt,capacity);
+        int take=0;
+        if(wt[ind]<=capacity){
+            take=val[ind]+fun(ind,val,wt,capacity-wt[ind]);
+        }
+        return dp[ind][capacity]=max(take,not_take);
+    }
+    int knapSack(vector<int>& val, vector<int>& wt, int capacity) {
+        // code here
+        int n=val.size();
+        dp.assign(n,vector<int> (capacity+1,-1));
+        return fun(n-1,val,wt,capacity);
+    }
+};

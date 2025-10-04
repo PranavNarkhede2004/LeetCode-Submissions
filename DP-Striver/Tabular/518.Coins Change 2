@@ -1,0 +1,16 @@
+    // int fun(int ind,int amount,vector<int>& coins){
+    //     if(ind==0){ 
+    //         if(amount%coins[ind]==0) return 1;
+    //         else return 0;
+    //     }
+    //     if(amount==0) return 1;
+    //     if(dp[ind][amount]!=-1){
+    //         return dp[ind][amount];
+    //     }
+    //     int not_take=fun(ind-1,amount,coins);
+    //     int take=0;
+    //     if(coins[ind]<=amount){
+    //         take=fun(ind,amount-coins[ind],coins);
+    //     }
+    //     return dp[ind][amount]=take+not_take;
+    // }
