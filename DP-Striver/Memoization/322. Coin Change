@@ -1,0 +1,31 @@
+class Solution {
+public:
+    vector<vector<int>> dp;
+    int fun(vector<int>& coins,int ind,int target){
+        if(ind==0){
+            if(target%coins[ind]==0) return target/coins[ind];
+            else return 1e9;
+        }
+        if(target==0) return 0;
+        if(dp[ind][target]!=-1){
+            return dp[ind][target];
+        }else {
+                int not_take=fun(coins,ind-1,target);
+                int take=1e9;
+                if(target>=coins[ind]){
+                    take=1+fun(coins,ind,target-coins[ind]);
+                }
+                return dp[ind][target]=min(take,not_take);
+        }
+
+
+    }
+    int coinChange(vector<int>& coins, int amount) {
+        int n=coins.size();
+        dp.assign(n,vector<int>(amount+1,-1));
+        int ans= fun(coins,n-1,amount);
+        if(ans==1e9){
+            return -1;
+        }else return ans;
+    }   
+};
