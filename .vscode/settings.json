@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "*.ejs": "html",
-        "146_lrucache": "cpp"
+        "146_lrucache": "cpp",
+        "frog jump": "cpp"
     }
 }

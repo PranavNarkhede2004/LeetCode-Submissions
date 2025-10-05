@@ -6,7 +6,7 @@ public:
         if (n == 1) return nums[0];
         if (n == 2) return max(nums[0], nums[1]);
 
-        // Case 1: remove last house (0 -> n-2)
+       
         int prev2 = nums[0];
         int prev1 = max(nums[0], nums[1]);
         int curr = prev1;
@@ -17,7 +17,7 @@ public:
         }
         int remLast = curr;
 
-        // Case 2: remove first house (1 -> n-1)
+       
         prev2 = nums[1];
         prev1 = max(nums[1], nums[2]);
         curr = prev1;
