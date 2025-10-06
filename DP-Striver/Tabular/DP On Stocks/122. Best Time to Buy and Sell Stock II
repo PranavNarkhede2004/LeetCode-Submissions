@@ -1,0 +1,42 @@
+class Solution {
+public:
+    int n;
+    //true=1 false=0
+    vector<vector<int>> dp;
+    int maxProfit(vector<int>& prices) {
+        n=prices.size();
+        vector<int> prev(2,0),curr(2,0);
+        for(int i=n-1;i>=0;i--){
+            for(int j=0;j<2;j++){
+                if(j==1){
+                   curr[j] = max(prices[i] + prev[0], prev[1]);
+                }else{
+                   curr[j] = max(-prices[i] + prev[1], prev[0]);
+                }
+            }
+            prev=curr;
+        }
+        return prev[0];
+    }
+};
+
+
+class Solution {
+public:
+    int n;
+    //true=1 false=0
+    vector<vector<int>> dp;
+    int maxProfit(vector<int>& prices) {
+        n=prices.size();
+        int prev0=0,prev1=0,curr0=0,curr1=0;
+        for(int i=n-1;i>=0;i--){
+                    curr0= max(-prices[i] + prev1, prev0);
+                    curr1 = max(prices[i] + prev0, prev1);
+                    prev0=curr0;
+                    prev1=curr1;
+            }
+            
+        
+        return prev0;
+    }
+};
