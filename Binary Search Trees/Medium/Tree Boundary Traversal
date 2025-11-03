@@ -1,0 +1,77 @@
+class Solution {
+  public:
+    vector<int> L,R,Leaf;
+    bool isLeaf(Node *node){
+        if(node->left==NULL && node->right==NULL) return true;
+        else return false;
+    }
+    void leftTraverse(Node *root){
+        if(root==NULL) return;
+        if(isLeaf(root)) return;
+        L.push_back(root->data);
+        if(root->left!=NULL){
+            leftTraverse(root->left);
+        }else if(root->right!=NULL){
+            leftTraverse(root->right);
+        }
+    }
+    
+    void rightTraverse(Node *root){
+        if(root==NULL) return;
+        if(isLeaf(root)) return;
+        R.push_back(root->data);
+        if(root->right!=NULL){
+            rightTraverse(root->right);
+        }else if(root->left!=NULL){
+            rightTraverse(root->left);
+        }
+    }
+    void LeafTraverse(Node *root){
+        if(root==NULL) return;
+        LeafTraverse(root->left);
+        if(isLeaf(root)) Leaf.push_back(root->data);
+        LeafTraverse(root->right);
+    }
+    vector<int> boundaryTraversal(Node *root) {
+        if (root == NULL) return {};
+        if (!isLeaf(root)) L.push_back(root->data);  
+        leftTraverse(root->left);
+        LeafTraverse(root);
+        rightTraverse(root->right);
+        for(int i=0;i<Leaf.size();i++){
+            L.push_back(Leaf[i]);
+        }
+        for(int i=R.size()-1;i>=0;i--){
+            L.push_back(R[i]);
+        }
+        return L;
+    }
+};
+class Solution {
+public:
+    vector<vector<int>> verticalTraversal(TreeNode* root) {
+        map<int, map<int, multiset<int>>> mp;
+        queue<pair<TreeNode*, pair<int, int>>> q;
+        q.push({root, {0, 0}});
+        while (!q.empty()) {
+            auto temp = q.front();
+            q.pop();
+            TreeNode* node = temp.first;
+            int x = temp.second.first;
+            int y = temp.second.second;
+            mp[x][y].insert(node->val);
+            if (node->left)
+                q.push({node->left, {x - 1, y + 1}});
+            if (node->right)
+                q.push({node->right, {x + 1, y + 1}});
+        }
+        vector<vector<int>> ans;
+        for (auto &p : mp) {
+            vector<int> col;
+            for (auto &q : p.second)
+                col.insert(col.end(), q.second.begin(), q.second.end());
+            ans.push_back(col);
+        }
+        return ans;
+    }
+};
