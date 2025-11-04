@@ -1,0 +1,48 @@
+/*
+
+Definition for Binary Tree Node
+struct Node
+{
+    int data;
+    struct Node* left;
+    struct Node* right;
+
+    Node(int x){
+        data = x;
+        left = right = NULL;
+    }
+};
+*/
+
+class Solution {
+  public:
+    vector<vector<int>> ans;
+  
+    
+    void FindLeaf(Node *root,vector<int> &path){
+        if(root==NULL) return ;
+        path.push_back(root->data);
+        if(root->left==NULL && root->right==NULL){
+            ans.push_back(path);
+            }else{
+                    FindLeaf(root->left,path);
+                    FindLeaf(root->right,path);            
+        }
+        path.pop_back();
+
+    }
+    vector<vector<int>> Paths(Node* root) {
+        // code here
+        if(root==NULL) return ans;
+        vector<int> path;
+        FindLeaf(root,path);
+        return ans;
+        
+        
+        
+        
+        
+        
+        
+    }
+};
