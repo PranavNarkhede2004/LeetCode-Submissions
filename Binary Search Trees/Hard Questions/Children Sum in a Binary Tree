@@ -1,0 +1,33 @@
+class Solution {
+  public:
+    int isSumProperty(Node *root) {
+        if (root == NULL) return true;
+
+        queue<Node *> q;
+        q.push(root);
+
+        while (!q.empty()) {
+            Node *temp = q.front();
+            q.pop();
+
+            // Skip leaf nodes
+            if (temp->left == NULL && temp->right == NULL)
+                continue;
+
+            int l = 0, r = 0;
+            if (temp->left != NULL) {
+                q.push(temp->left);
+                l = temp->left->data;
+            }
+            if (temp->right != NULL) {
+                q.push(temp->right);
+                r = temp->right->data;
+            }
+
+            if (temp->data != l + r)
+                return false;
+        }
+
+        return true;
+    }
+};
