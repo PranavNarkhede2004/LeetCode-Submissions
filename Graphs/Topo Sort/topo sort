@@ -1,0 +1,40 @@
+class Solution {
+  public:
+  vector<int> visited;
+  void dfs(int node,vector<vector<int>> &adj,stack<int> &st){
+      int m=adj[node].size();
+      visited[node]=1;
+      for(int i=0;i<m;i++){
+          int nei=adj[node][i];
+          if(!visited[nei]){
+              dfs(nei,adj,st);
+              
+          }
+      }
+      st.push(node);
+  }
+    vector<int> topoSort(int V, vector<vector<int>>& edges) {
+        // code here
+        visited.assign(V,0);
+        int n=edges.size();
+        vector<vector<int>> adj;
+        stack<int> st;
+        adj.resize(V);
+        for(int i=0;i<n;i++){
+            int u=edges[i][0];
+            int v=edges[i][1];
+            adj[u].push_back(v);
+        }
+        for(int i=0;i<V;i++){
+            if(!visited[i]){
+                dfs(i,adj,st);
+            }
+        }
+        vector<int> ans;
+        while(!st.empty()){
+            ans.push_back(st.top());
+            st.pop();
+        }
+        return ans;
+    }
+};

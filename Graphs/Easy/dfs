@@ -1,0 +1,23 @@
+class Solution {
+  public:
+   vector<int> ans;
+    vector<int> isVisited;
+    void fun(int node,vector<vector<int>>& adj){
+        isVisited[node]=1;
+        ans.push_back(node);
+        int m=adj[node].size();
+        for(int i=0;i<m;i++){
+            if(!isVisited[adj[node][i]]){
+                fun(adj[node][i],adj);
+            }
+        }
+    }
+    vector<int> dfs(vector<vector<int>>& adj) {
+        // Code here
+        int n=adj.size();
+        isVisited.assign(n+1,0);
+        isVisited[0]=1;
+        fun(0,adj);
+        return ans;
+    }
+};

@@ -1,0 +1,49 @@
+class Solution {
+public:
+    void solve(vector<vector<char>>& mat) {
+        int n=mat.size();
+        int m=mat[0].size();
+        vector<vector<int>> Vis(n,vector<int>(m,0));
+        vector<vector<int>> ans(n,vector<int>(m,0));
+        queue<pair<int,int>> q;
+
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if((i==0 || i==n-1 || j==0 ||j==m-1) && mat[i][j]=='O'){
+                    q.push({i,j});
+                    Vis[i][j]=1;
+                }
+            }
+        }
+        int delrow[]={-1,0,+1,0};
+        int delcol[]={0,+1,0,-1};
+        while(!q.empty()){
+            int r=q.front().first;
+            int c=q.front().second;
+            q.pop();
+            for(int i=0;i<4;i++){
+                int nr=r+delrow[i];
+                int nc=c+delcol[i];
+
+                if(nr>=0 && nr<=n-1 &&
+                   nc>=0 && nc<=m-1 &&
+                   Vis[nr][nc]==0 &&
+                   mat[nr][nc]=='O'
+                   ){
+                    Vis[nr][nc]=1;
+                    q.push({nr,nc});
+
+                   }
+            }
+
+
+        }
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(Vis[i][j]==0 && mat[i][j]=='O'){
+                    mat[i][j]='X';
+                }
+            }
+        }
+    }
+};

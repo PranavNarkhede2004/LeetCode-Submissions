@@ -1,0 +1,71 @@
+class Solution {
+public:
+    vector<int> Visited;
+    void dfs(int node, vector<vector<int>>& adj){
+        Visited[node] = 1;
+        int m = adj[node].size();
+        for(int i = 0; i < m; i++){
+            if(!Visited[adj[node][i]]){
+                dfs(adj[node][i], adj);
+            }
+        }
+    }
+
+    int findCircleNum(vector<vector<int>>& isConnected) {
+        int n = isConnected.size();
+        Visited.assign(n, 0);
+
+        
+        vector<vector<int>> adj;
+        adj.resize(n);                    
+
+       
+        for(int i = 0; i < n; i++){
+            for(int j = i + 1; j < n; j++){
+                if(i != j && isConnected[i][j] == 1){
+                    adj[i].push_back(j);
+                    adj[j].push_back(i);
+                }
+            }
+        }
+
+        int cnt = 0;
+        for (int i = 0; i < n; i++) {
+            if (!Visited[i]) {
+                cnt++;
+                dfs(i, adj);
+            }
+        }
+        return cnt;
+    }
+};
+
+
+
+class Solution {
+public:
+    vector<int> Visited;
+
+    void dfs(int node, vector<vector<int>>& isConnected) {
+        Visited[node] = 1;
+        int n = isConnected.size();
+        for (int j = 0; j < n; j++) {
+            if (isConnected[node][j] == 1 && !Visited[j]) {
+                dfs(j, isConnected);
+            }
+        }
+    }
+
+    int findCircleNum(vector<vector<int>>& isConnected) {
+        int n = isConnected.size();
+        Visited.assign(n, 0); 
+        int cnt = 0;
+        for (int i = 0; i < n; i++) {
+            if (!Visited[i]) {
+                cnt++;
+                dfs(i, isConnected);
+            }
+        }
+        return cnt;
+    }
+};

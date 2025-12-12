@@ -1,0 +1,28 @@
+class Solution {
+public:
+    vector<int> bfs(vector<vector<int>>& adj) {
+        int n = adj.size();
+        vector<int> visited(n, 0);
+        vector<int> ans;
+        queue<int> q;
+
+        q.push(0);
+        visited[0] = 1;
+
+        while (!q.empty()) {
+            int node = q.front();
+            q.pop();
+
+            ans.push_back(node);
+
+            for (int nbr : adj[node]) {
+                if (!visited[nbr]) {
+                    visited[nbr] = 1;
+                    q.push(nbr);
+                }
+            }
+        }
+
+        return ans;
+    }
+};
