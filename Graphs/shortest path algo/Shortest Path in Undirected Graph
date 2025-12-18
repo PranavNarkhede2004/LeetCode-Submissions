@@ -1,0 +1,38 @@
+class Solution {
+  public:
+    vector<int> shortestPath(int V, vector<vector<int>> &edges, int src) {
+        // code here
+        int n=edges.size();
+        vector<vector<int>> adj;
+        adj.resize(V);
+        
+        for(int i=0;i<n;i++){
+            int u=edges[i][0];
+            int v=edges[i][1];
+            adj[u].push_back(v);
+            adj[v].push_back(u);
+        }
+        queue<int> q;
+        q.push(src);
+        vector<int> dist(V,MAX_INPUT);
+        dist[src]=0;
+        while(!q.empty()){
+            int node=q.front();
+            q.pop();
+            int m=adj[node].size();
+            for(int i=0;i<m;i++){
+                int nei=adj[node][i];
+                if(dist[nei]>1+dist[node]){
+                    dist[nei]=1+dist[node];
+                    q.push(nei);
+                }
+            }
+        }
+        for(int i=0;i<V;i++){
+            if(dist[i]>=MAX_INPUT){
+                dist[i]=-1;
+            }
+        }
+        return dist;
+    }
+};

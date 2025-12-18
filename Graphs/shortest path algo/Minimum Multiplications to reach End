@@ -1,0 +1,32 @@
+// User function Template for C++
+
+class Solution {
+  public:
+    int minimumMultiplications(vector<int>& arr, int start, int end) {
+        if(start==end) return 0;
+        // code here
+        queue<pair<int,int>> q;
+        q.push({start,0}); // {node,steps}
+        int mod=1e5;
+        vector<int> dist(1e5,1e9);
+        dist[start]=0;
+        while(!q.empty()){
+            auto it=q.front();
+            int node=it.first;
+            int steps=it.second;
+            q.pop();
+            if(steps > dist[node]) continue;
+
+            
+            for(auto p:arr){
+                int num=(node*p)%mod;
+                if(steps+1<dist[num]){
+                    dist[num]=steps+1;
+                    if(num==end) return steps+1;
+                    q.push({num,steps+1});
+                }
+            }
+        }
+        return -1;
+    }
+};

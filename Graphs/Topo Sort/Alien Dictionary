@@ -1,0 +1,71 @@
+class Solution {
+  public:
+    string findOrder(vector<string> &words) {
+        int n = words.size();
+
+        vector<vector<int>> adj;
+        adj.resize(26);
+        vector<int> indegree(26, 0);
+        vector<bool> present(26, false);
+
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < words[i].length(); j++){
+                char c = words[i][j];
+                present[c - 'a'] = true;
+            }
+        }
+
+        for(int i = 0; i < n - 1; i++){
+            string first = words[i];
+            string second = words[i + 1];
+            int l1 = first.length();
+            int l2 = second.length();
+
+            bool found = false;
+            for(int j = 0; j < min(l1, l2); j++){
+                if(first[j] != second[j]){
+                    int u = first[j] - 'a';
+                    int v = second[j] - 'a';
+                    adj[u].push_back(v);
+                    indegree[v]++;
+                    found = true;
+                    break;
+                }
+            }
+
+            if(!found && l1 > l2){
+                return "";
+            }
+        }
+
+        string ans = "";
+        queue<int> q;  
+        for(int i = 0; i < 26; i++){
+            if(present[i] && indegree[i] == 0){
+                q.push(i);
+            }
+        }
+
+        while(!q.empty()){
+            int node = q.front();
+            q.pop();
+            ans.push_back('a' + node);
+
+            int m = adj[node].size();
+            for(int i = 0; i < m; i++){
+                indegree[adj[node][i]]--;
+                if(indegree[adj[node][i]] == 0){
+                    q.push(adj[node][i]);
+                }
+            }
+        }
+
+        int cnt = 0;
+        for(int i = 0; i < 26; i++){
+            if(present[i]) cnt++;
+        }
+
+        if(ans.size() != cnt) return "";
+        return ans;
+    }
+};
